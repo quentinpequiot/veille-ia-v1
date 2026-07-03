@@ -1,0 +1,994 @@
+{
+  "name": "Veille IA V1",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://bloody-disgusting.com/feed/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        -16
+      ],
+      "id": "223a06a6-1039-4c12-8ca5-6b4b4ceb84d0",
+      "name": "RSS Horror Movies"
+    },
+    {
+      "parameters": {
+        "url": "https://techcrunch.com/feed/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        112
+      ],
+      "id": "1dde9b34-6a19-4d7e-9d87-757aeadde710",
+      "name": "RSS Tech"
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1152,
+        -32
+      ],
+      "id": "26ac6e1a-63fb-4b97-a1d0-3cac01d19256",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12f2b778-9353-4a4f-8a62-e0b78620ddbd",
+              "name": "Titre",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "e0ff70a7-f281-4f4b-be09-ba2def1fc7e4",
+              "name": "Resume",
+              "value": "={{$json.contentSnippet}}",
+              "type": "string"
+            },
+            {
+              "id": "35a7d7f7-68cc-45a2-81ea-7da58e545b3d",
+              "name": "Url",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "caa23b7d-846d-400e-a563-b8005252eb20",
+              "name": "Date Publication",
+              "value": "={{ new Date($json.pubDate).toISOString() }}",
+              "type": "string"
+            },
+            {
+              "id": "26b95f52-b99f-413a-960d-468deeedbc7d",
+              "name": "Source",
+              "value": "Tech",
+              "type": "string"
+            },
+            {
+              "id": "876a809d-ecdc-4085-be04-83eb1ba69b44",
+              "name": "Author",
+              "value": "={{$json.creator}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        112
+      ],
+      "id": "bba657ef-f80d-4f2a-9176-2c135fd619c6",
+      "name": "Source Tech"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "Url",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        1312,
+        -16
+      ],
+      "id": "2fb94219-dd5d-4da0-a19e-a68e6203c8ac",
+      "name": "Remove Duplicates"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3e9f2b76-39d1-4464-b162-efa8f3d506de",
+              "name": "Titre",
+              "value": "={{ $json.title }}\"",
+              "type": "string"
+            },
+            {
+              "id": "c72d4a28-c2b4-4116-8a29-e9aebcc93d62",
+              "name": "Resume",
+              "value": "={{$json.contentSnippet}}",
+              "type": "string"
+            },
+            {
+              "id": "0c3c6756-7fa5-40db-bbcb-f14715dc6341",
+              "name": "Url",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "de22ef37-e867-4b51-a410-6e0fc37d7aac",
+              "name": "Date Publication",
+              "value": "={{ new Date($json.pubDate).toISOString() }}",
+              "type": "string"
+            },
+            {
+              "id": "71921112-0b8a-4a7f-847d-b84d70097011",
+              "name": "Source",
+              "value": "Horror",
+              "type": "string"
+            },
+            {
+              "id": "fb8e6618-81bc-4c9a-a5ed-967cb967902f",
+              "name": "Author",
+              "value": "={{$json.creator}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        -16
+      ],
+      "id": "f68a68ee-79d8-4571-ac95-a1237e31513d",
+      "name": "Source Horror"
+    },
+    {
+      "parameters": {
+        "url": "https://www.eurogamer.net/feed",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        -144
+      ],
+      "id": "51154d7e-6c76-4050-be13-a544fb9f5faf",
+      "name": "RSS Video Game"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ab2657da-38c6-4950-8510-1026bf21859a",
+              "name": "Titre",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "b6963c59-7da6-400f-8837-fe0bc3f21c8e",
+              "name": "Resume",
+              "value": "={{$json.contentSnippet}}",
+              "type": "string"
+            },
+            {
+              "id": "19f3fe3c-bb63-431e-ba2c-33d7614a0172",
+              "name": "Url",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "34f1be10-9bf5-4cf0-88c7-4ebd70f76314",
+              "name": "Date Publication",
+              "value": "={{ new Date($json.pubDate).toISOString() }}",
+              "type": "string"
+            },
+            {
+              "id": "4a7c7542-27ec-4594-a615-a4317d72f1ad",
+              "name": "Source",
+              "value": "VGame",
+              "type": "string"
+            },
+            {
+              "id": "0e622708-34f9-4cce-9597-01496c3b7276",
+              "name": "Author",
+              "value": "={{$json.creator}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        -144
+      ],
+      "id": "1bdc6a3e-1742-476d-8050-29937db6e9a3",
+      "name": "Source VGame"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "837b00a3-166e-494a-a997-4213ac0bc98a",
+              "leftValue": "={{ $json[\"Date Publication\"] }}",
+              "rightValue": "={{ $now.minus({ days: 1 }) }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "after"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        592,
+        -144
+      ],
+      "id": "f673138f-efe4-4eba-a735-0456d2e3e854",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "Date Publication",
+              "order": "descending"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        784,
+        -160
+      ],
+      "id": "03aab9b9-8881-4a46-924b-75ab7aef8306",
+      "name": "Sort1"
+    },
+    {
+      "parameters": {
+        "maxItems": 8,
+        "keep": "=firstItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        960,
+        -160
+      ],
+      "id": "bba7fb92-1a56-4d33-904c-c5f80fed7fb2",
+      "name": "Limit1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "837b00a3-166e-494a-a997-4213ac0bc98a",
+              "leftValue": "={{ $json[\"Date Publication\"] }}",
+              "rightValue": "={{ $now.minus({ days: 1 }) }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "after"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        592,
+        -16
+      ],
+      "id": "f11f89e1-4992-4f7d-9ebd-45097dd9d7f1",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "837b00a3-166e-494a-a997-4213ac0bc98a",
+              "leftValue": "={{ $json[\"Date Publication\"] }}",
+              "rightValue": "={{ $now.minus({ days: 1 }) }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "after"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        592,
+        112
+      ],
+      "id": "8e3a76af-2d7c-4b6c-967c-75690fbe50b9",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "Date Publication",
+              "order": "descending"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        784,
+        -16
+      ],
+      "id": "e729c434-9286-4d3b-b7d3-e659578055e9",
+      "name": "Sort2"
+    },
+    {
+      "parameters": {
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "Date Publication",
+              "order": "descending"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        784,
+        128
+      ],
+      "id": "f756e6bc-fa4e-4bb5-b993-5c00749a7a99",
+      "name": "Sort3"
+    },
+    {
+      "parameters": {
+        "maxItems": 6,
+        "keep": "=firstItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        960,
+        -16
+      ],
+      "id": "5a91a880-92f4-4d26-98b8-e129bf4e9e98",
+      "name": "Limit2"
+    },
+    {
+      "parameters": {
+        "maxItems": 8,
+        "keep": "=firstItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        960,
+        128
+      ],
+      "id": "1e8aed83-f3f5-4bd7-b43e-94ef128dc83e",
+      "name": "Limit3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Analyse l'article suivant.\n\nTitre :\n{{ $json[\"Titre\"] }}\n\nRésumé RSS :\n{{ $json[\"Resume\"] }}\n\nSource :\n{{ $json[\"Source\"] }}\n\nURL :\n{{ $json[\"Url\"] }}\n\nProduis le JSON demandé.",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Tu es un analyste senior spécialisé dans la veille technologique.\n\nTa mission est d'analyser des articles provenant de flux RSS et de produire une sortie JSON parfaitement valide destinée à être traitée automatiquement par un workflow n8n.\n\nTu dois être :\n- objectif,\n- précis,\n- synthétique,\n- cohérent d'un article à l'autre.\n\nRègles importantes :\n\n- Tu ne dois JAMAIS répondre avec du texte en dehors du JSON.\n- Ne mets jamais de markdown.\n- Ne mets jamais de ```json.\n- Retourne uniquement un objet JSON valide.\n\nLe résumé doit être rédigé en français.\n\nLa catégorie doit être UNE SEULE parmi :\n\nIA\nTech\nJeux vidéo\nCinéma\nRobotique\nCybersécurité\nBusiness\nAutre\n\nLe score de pertinence est un entier de 0 à 10.\n\nPour attribuer ce score, privilégie :\n\n• l'importance réelle de l'information\n• son impact sur le secteur\n• son caractère officiel\n• sa nouveauté\n• son intérêt pour une veille technologique\n\nImportance doit être uniquement :\n\nCritique\nHaute\nMoyenne\nFaible\n\nLecture estimée doit être uniquement :\n\n1 min\n2 min\n3 min\n5 min\n\nLe résumé ne dépasse jamais deux phrases.\n\nLes points clés sont exactement trois.\n\nLe JSON doit respecter exactement cette structure :\n\n{\n  \"titre\":\"\",\n  \"resume\":\"\",\n  \"points_cles\":[\"\",\"\",\"\"],\n  \"categorie\":\"\",\n  \"pertinence_score\":0,\n  \"importance\":\"\",\n  \"raison_score\":\"\",\n  \"lecture_estimee\":\"\"\n}\nLorsque plusieurs articles ont une qualité similaire, favorise ceux qui annoncent une nouveauté, une décision officielle, un lancement, une évolution stratégique ou une information ayant un impact durable plutôt que les rumeurs, bandes-annonces ou contenus promotionnels."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        1520,
+        -16
+      ],
+      "id": "9fbb92d4-74ee-4933-9c87-c493c3cafc5f",
+      "name": "Basic LLM Chain",
+      "retryOnFail": false,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1520,
+        144
+      ],
+      "id": "d201cbfe-fec3-4a7e-a48e-111647f9533f",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "71eD0rw6iQkQXCFr",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = [];\n\nfor (const item of $input.all()) {\n  let rawText = item.json.text || item.json.output || \"\";\n  \n  // Retirer les balises markdown ```json ... ```\n  rawText = rawText.replace(/```json\\s*/g, \"\").replace(/```\\s*/g, \"\").trim();\n  \n  // Retirer les virgules traînantes (trailing commas) avant ] ou }\n  rawText = rawText.replace(/,\\s*([}\\]])/g, \"$1\");\n  \n  let parsed;\n  try {\n    parsed = JSON.parse(rawText);\n  } catch (e) {\n    parsed = {\n      titre: \"ERREUR PARSING\",\n      resume: rawText.substring(0, 200),\n      points_cles: [],\n      categorie: \"Autre\",\n      pertinence_score: 0,\n      raison_score: \"Erreur de parsing JSON : \" + e.message\n    };\n  }\n  \n  items.push({ json: parsed });\n}\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1808,
+        -16
+      ],
+      "id": "8bd8fca9-9ac4-4f30-987b-af7323b75ecb",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "pertinence_score",
+              "order": "descending"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        1968,
+        -16
+      ],
+      "id": "dbe283cf-b10f-4ad6-b7c6-b64d66c1dc35",
+      "name": "Sort"
+    },
+    {
+      "parameters": {
+        "maxItems": 10
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        2128,
+        -16
+      ],
+      "id": "8859f7cb-2ffb-4229-8cd7-4622d3b51695",
+      "name": "Limit4"
+    },
+    {
+      "parameters": {
+        "jsCode": "const articles = $input.all();\n\nlet contenu = \"\";\n\narticles.forEach((item, index) => {\n  const a = item.json;\n\n  contenu += `\nArticle ${index + 1}\n\nTitre : ${a.titre}\n\nCatégorie : ${a.categorie}\n\nPertinence : ${a.pertinence_score}/10\n\nRésumé :\n${a.resume}\n\nPoints clés :\n- ${a.points_cles.join(\"\\n- \")}\n\n-------------------------\n\n`;\n});\n\nreturn [\n  {\n    json: {\n      articles: contenu\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2352,
+        112
+      ],
+      "id": "9f6619af-eb86-4ddc-90e7-021518ccdce0",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Voici les principaux articles du jour.\n\n{{ $json[\"articles\"] }}\n\nRédige une synthèse.",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Tu es rédacteur en chef d'une newsletter de veille technologique.\n\nÀ partir de plusieurs articles déjà résumés, rédige une synthèse professionnelle.\n\nLe texte doit :\n- faire entre 120 et 180 mots\n- être fluide\n- mettre en avant les tendances importantes\n- ne pas répéter chaque article\n- conclure par une phrase résumant la journée\n\nRéponds uniquement avec le texte."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        2560,
+        -16
+      ],
+      "id": "50eb22b6-46b4-4d0b-aea8-22226f2041ee",
+      "name": "Basic LLM Chain1",
+      "retryOnFail": false,
+      "maxTries": 2,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        2560,
+        144
+      ],
+      "id": "d0e5b9b2-b00b-4c9e-b3e4-23ebf68948ff",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "71eD0rw6iQkQXCFr",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2848,
+        -128
+      ],
+      "id": "1797da9f-c65f-465c-b6b8-8b1256a7588d",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\n// Séparer la synthèse des articles\nconst synthese = items.find(i => i.json.text)?.json.text || \"Synthèse non disponible.\";\nconst articles = items.filter(i => i.json.titre);\n\n// Statistiques\nconst scores = articles.map(a => a.json.pertinence_score || 0);\nconst scoreMoyen = (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1);\n\nconst categories = {};\narticles.forEach(a => {\n  const cat = a.json.categorie || \"Autre\";\n  categories[cat] = (categories[cat] || 0) + 1;\n});\n\nconst statsCategories = Object.entries(categories)\n  .sort((a, b) => b[1] - a[1])\n  .map(([cat, count]) => `${cat} : ${count} article${count > 1 ? 's' : ''}`)\n  .join(\" | \");\n\n// Icônes par catégorie\nconst icones = {\n  \"IA\": \"🤖\",\n  \"Tech\": \"💻\",\n  \"Jeux vidéo\": \"🎮\",\n  \"Cinéma\": \"🎬\",\n  \"Robotique\": \"🦾\",\n  \"Cybersécurité\": \"🔐\",\n  \"Business\": \"📈\",\n  \"Autre\": \"📌\"\n};\n\nconst iconeImportance = {\n  \"Critique\": \"🔥\",\n  \"Haute\": \"⭐\",\n  \"Moyenne\": \"🟡\",\n  \"Faible\": \"⚪\"\n};\n\n// Construction du rapport HTML\nlet articlesHTML = \"\";\narticles.forEach((item, index) => {\n  const a = item.json;\n  const icone = icones[a.categorie] || \"📌\";\n  const imp = iconeImportance[a.importance] || \"🟡\";\n  const pointsCles = (a.points_cles || []).map(p => `<li>${p}</li>`).join(\"\");\n\n  articlesHTML += `\n    <div style=\"border-left: 3px solid #7c3aed; padding: 12px 16px; margin-bottom: 20px; background: #f9f8ff;\">\n      <div style=\"font-size: 11px; color: #888; font-family: monospace; margin-bottom: 4px;\">\n        ${icone} ${a.categorie} &nbsp;·&nbsp; ${imp} ${a.importance} &nbsp;·&nbsp; ⏱️ ${a.lecture_estimee} &nbsp;·&nbsp; ⭐ ${a.pertinence_score}/10\n      </div>\n      <div style=\"font-weight: 600; font-size: 15px; color: #1a1a2e; margin-bottom: 6px;\">\n        <a href=\"${a.Url || a.url || a.URL || '#'}\" style=\"color: #7c3aed; text-decoration: none;\">${a.titre}</a>\n      </div>\n      <div style=\"font-size: 13px; color: #444; margin-bottom: 8px;\">${a.resume}</div>\n      <ul style=\"font-size: 12px; color: #555; padding-left: 18px; margin: 0;\">\n        ${pointsCles}\n      </ul>\n    </div>\n  `;\n});\n\nconst html = `\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"></head>\n<body style=\"font-family: 'Segoe UI', sans-serif; max-width: 680px; margin: 0 auto; padding: 24px; color: #1a1a2e; background: #ffffff;\">\n\n  <div style=\"text-align: center; padding: 24px 0 16px; border-bottom: 2px solid #7c3aed; margin-bottom: 24px;\">\n    <div style=\"font-size: 11px; color: #888; font-family: monospace; letter-spacing: 0.1em; text-transform: uppercase;\">Veille quotidienne</div>\n    <div style=\"font-size: 28px; font-weight: 700; color: #7c3aed; margin: 6px 0;\">📡 Veille IA & Tech</div>\n    <div style=\"font-size: 12px; color: #999;\">${new Date().toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</div>\n  </div>\n\n  <div style=\"background: #1a1a2e; color: #e8e6f0; border-radius: 10px; padding: 20px 24px; margin-bottom: 28px;\">\n    <div style=\"font-size: 11px; color: #a78bfa; font-family: monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px;\">🧠 Synthèse du jour</div>\n    <div style=\"font-size: 14px; line-height: 1.8; color: #d1d5db;\">${synthese}</div>\n  </div>\n\n  <div style=\"background: #f5f4f0; border-radius: 8px; padding: 12px 16px; margin-bottom: 28px; font-size: 12px; color: #555; font-family: monospace;\">\n    📊 ${articles.length} articles analysés &nbsp;·&nbsp; Score moyen : ${scoreMoyen}/10 &nbsp;·&nbsp; ${statsCategories}\n  </div>\n\n  <div style=\"font-size: 11px; color: #7c3aed; font-family: monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;\">🔥 Top ${articles.length} du jour</div>\n\n  ${articlesHTML}\n\n  <div style=\"text-align: center; padding: 20px 0; border-top: 1px solid #e5e7eb; margin-top: 24px; font-size: 11px; color: #aaa; font-family: monospace;\">\n    Généré automatiquement · Workflow n8n · Gemini Flash\n  </div>\n\n</body>\n</html>\n`;\n\nreturn [{ json: { html, synthese, nb_articles: articles.length, score_moyen: scoreMoyen } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3024,
+        16
+      ],
+      "id": "9a21b0cf-57da-4a57-bb7e-ac1aa5677e5b",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "sendTo": "quentin.pequiot@gmail.com",
+        "subject": "=📡 Veille IA & Tech — {{$now.format(\"dd/MM/yyyy\")}}",
+        "message": "={{ $json.html }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        3200,
+        16
+      ],
+      "id": "aca5e175-aa0f-4c50-99ef-0e302871b3c3",
+      "name": "Send a message",
+      "webhookId": "9a59b4b4-2f0e-4925-881a-64f311772211",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "hpodcFJWNks7iLc2",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        -16
+      ],
+      "id": "0646a288-6d00-4f02-be1e-b3d4a8cac660",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "RSS Horror Movies": {
+      "main": [
+        [
+          {
+            "node": "Source Horror",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Tech": {
+      "main": [
+        [
+          {
+            "node": "Source Tech",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Source Tech": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Remove Duplicates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove Duplicates": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Source Horror": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Video Game": {
+      "main": [
+        [
+          {
+            "node": "Source VGame",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Source VGame": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Sort1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort1": {
+      "main": [
+        [
+          {
+            "node": "Limit1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort2": {
+      "main": [
+        [
+          {
+            "node": "Limit2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort3": {
+      "main": [
+        [
+          {
+            "node": "Limit3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Sort2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Sort3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Limit3": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Sort",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort": {
+      "main": [
+        [
+          {
+            "node": "Limit4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit4": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain1": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "RSS Horror Movies",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Video Game",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Tech",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "2342cb04-a89d-42e2-880a-bb040bfefaf2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dd6b8a90decf2b9499a78fd60bbe050f101c6fdefec747e8ed9e931fa90d39b0"
+  },
+  "nodeGroups": [],
+  "id": "GcUOZwFg1bMWAxv5",
+  "tags": []
+}
